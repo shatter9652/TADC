@@ -1,0 +1,35 @@
+name: "Build iOS app"
+
+# on: [push]
+on: [workflow_dispatch]
+
+jobs:
+  build_ios:
+    runs-on: macos-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: build archive and ipaify
+        run: |
+          wget -O archive.zip "https://www.dropbox.com/scl/fi/9hff67s0a3zedic3g5iv3/0776e2ce-589e-11f1-bb01-58ce2aade9b3.zip?rlkey=lsrtb64270c6gabhmnk7um1ne&dl=1"
+          unzip archive.zip -d .
+
+          xcodebuild archive -project TADC.xcodeproj -scheme 'TADC' -archivePath TADC.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+          mkdir Payload
+          mv TADC.xcarchive/Products/Applications/TADC.app Payload/TADC.app
+
+          zip -r "TADC.ipa" "Payload"
+
+          mv TADC.ipa ${{ runner.temp }}/TADC.ipa
+
+
+      - name: Upload application
+        uses: actions/upload-artifact@v4
+        with:
+          name: TADC
+          path: ${{ runner.temp }}/TADC.ipa
+          # you can also archive the entire directory
+          # path: ${{ runner.temp }}/build
+          retention-days: 3
