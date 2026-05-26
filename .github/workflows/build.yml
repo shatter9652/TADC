@@ -12,7 +12,7 @@ jobs:
 
       - name: build archive and ipaify
         run: |
-          wget -O archive.zip "https://www.dropbox.com/scl/fi/jn4ban0zr7a7xxkavlwxc/bc4dc9a6-589e-11f1-a7c8-58ce2aade9b3.zip?rlkey=h1t0s4pryvw5zd2lq6ezutzgn&dl=1"
+          wget -O archive.zip "https://www.dropbox.com/scl/fi/hfqcgf1kd4w979pqan7f9/332baee6-58a7-11f1-a15a-58ce2aade9b3.zip?rlkey=d2lquot3osovmgjex0dwnsew3&dl=1"
           unzip archive.zip -d .
 
           xcodebuild archive -project TADC.xcodeproj -scheme 'TADC' -archivePath TADC.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
