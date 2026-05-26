@@ -12,24 +12,24 @@ jobs:
 
       - name: build archive and ipaify
         run: |
-          wget -O archive.zip "https://www.dropbox.com/scl/fi/hbjwjzsj60xou9mwn6clz/520b68dc-589e-11f1-8336-58ce2aade9b3.zip?rlkey=rrocnolj7z08rcd92jxwenllc&dl=1"
+          wget -O archive.zip "https://www.dropbox.com/scl/fi/jn4ban0zr7a7xxkavlwxc/bc4dc9a6-589e-11f1-a7c8-58ce2aade9b3.zip?rlkey=h1t0s4pryvw5zd2lq6ezutzgn&dl=1"
           unzip archive.zip -d .
 
-          xcodebuild archive -project TADC Alpha  B1.xcodeproj -scheme 'TADC Alpha  B1' -archivePath TADC Alpha  B1.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          xcodebuild archive -project TADC.xcodeproj -scheme 'TADC' -archivePath TADC.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
           mkdir Payload
-          mv TADC Alpha  B1.xcarchive/Products/Applications/TADC Alpha  B1.app Payload/TADC Alpha  B1.app
+          mv TADC.xcarchive/Products/Applications/TADC.app Payload/TADC.app
 
-          zip -r "TADC Alpha  B1.ipa" "Payload"
+          zip -r "TADC.ipa" "Payload"
 
-          mv TADC Alpha  B1.ipa ${{ runner.temp }}/TADC Alpha  B1.ipa
+          mv TADC.ipa ${{ runner.temp }}/TADC.ipa
 
 
       - name: Upload application
         uses: actions/upload-artifact@v4
         with:
-          name: TADC Alpha  B1
-          path: ${{ runner.temp }}/TADC Alpha  B1.ipa
+          name: TADC
+          path: ${{ runner.temp }}/TADC.ipa
           # you can also archive the entire directory
           # path: ${{ runner.temp }}/build
           retention-days: 3
